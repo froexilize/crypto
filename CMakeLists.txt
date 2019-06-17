@@ -55,10 +55,9 @@ set(RALIB_FILES
 add_library(crypto SHARED ${RALIB_FILES}
 		crypto/include/defs.h
 		crypto/include/export_decl.h
-		crypto/include/ra_types.h
+		crypto/include/types.h
 		crypto/include/macro.h
-		crypto/include/ra_log.h
-		crypto/src/ra_log.cpp)
+		)
 
 add_library(crypto_static ${RALIB_FILES})
 

@@ -74,7 +74,6 @@ bool verify(unsigned char *data,
         return result;
     } catch (const std::exception &e) {
         SPRINTF(Status, "EXCEPTION %s", e.what());
-        ra_log.exc("%s", e.what());
         return false;
     }
 }
@@ -98,7 +97,6 @@ bool gen_keys_pair(unsigned char *public_key_buffer,
         return true;
     } catch (const std::exception &e) {
         SPRINTF(Status, "EXCEPTION %s", e.what());
-        ra_log.exc("gen_keys_pair: %s", e.what());
         return false;
     }
 }

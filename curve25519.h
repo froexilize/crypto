@@ -8,9 +8,8 @@
 #include <stdlib.h>
 #include <exception>
 
-#include <ra_log.h>
 #include <ed25519.h>
-#include <ra_types.h>
+#include <types.h>
 #include "crypto.h" //TODO: use another header
 
 typedef tarr_type<CURVE25519_PUBLIC_SZ>curve_public_type;

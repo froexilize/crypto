@@ -1245,10 +1245,8 @@ bool curve25519_gen_keys_pair(curve_public_type &pubkey, curve_private_type &pri
         privkey.data[31] &= 0x7F;
         privkey.data[31] |= 0x40;
         curve25519_donna(pubkey.data, privkey.data, basepoint);
-        ra_log.dbg("curve25519 keys pair generated");
         return true;
     } catch(std::exception &e) {
-        ra_log.exc("curve25519 keys pair generation: %s", e.what());
         return false;
     }
 }
@@ -1260,7 +1258,6 @@ bool curve25519_get_shared_hash(hash_type &shared_hash, const curve_public_type 
         blake2(shared_hash.data, hash_type::get_sz(), shared_key.data, curve_shared_type::get_sz(), nullptr, 0);
         return true;
     } catch(std::exception &e) {
-        ra_log.exc("curve25519 keys pair generation: %s", e.what());
         return false;
     }
 }

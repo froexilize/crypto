@@ -4,26 +4,20 @@
 #include <string.h>
 #include <string>
 #include <stdlib.h>
-
 #include <macro.h>
 
-enum appendResult {
-    arUndefined = -1,
-    arAppended = 0,
-    arNotAppended,
-    arAlreadyExists,
-    arCount
-};
-
 #ifdef _WIN32
-//For unknown reasons this type defined in MSVC with another way; to prevent conflicting declaration ifdef made.
+// For unknown reasons this type defined in MSVC with another way;
+// to prevent conflicting declaration ifdef made.
 #ifndef socklen_t
 typedef int socklen_t;
 #endif
 #endif
 
 template<size_t BYTES> struct tarr_type {
-    tarr_type() {ZEROARR(data);}
+    tarr_type() {
+       memset((data), 0, sizeof(data));
+    }
     unsigned char data[BYTES];
     static size_t get_bits() {return BYTES << 3;}
     static size_t get_sz() {return BYTES;}
@@ -31,7 +25,7 @@ template<size_t BYTES> struct tarr_type {
         char Buffer[0x100] = {'\0'};
         for(size_t i = 0; i < BYTES; ++i)
             sprintf(Buffer + (i << 1), "%02X", data[i]);
-        ra_log.dbg(Buffer);
+        // print buffer on screen
     }
     void randomize() {
         srand((unsigned int)time(nullptr));
@@ -39,8 +33,8 @@ template<size_t BYTES> struct tarr_type {
             data[i] = (unsigned char)(rand() & 0xFF);
     }
     bool to_hex(char *hexBuffer, const size_t hexBufferSz, size_t keyPartLen = 0) const {
-        if(hexBufferSz < SUCC(BYTES << 1)) return false;
-        if(keyPartLen > BYTES) return false;
+        if(hexBufferSz < ((BYTES << 1) + 1)) return false; // Check if size for hex is correct
+        if(keyPartLen > BYTES) return false; // For partialy representation
         if(!keyPartLen) keyPartLen = BYTES;
         for (size_t i = 0; i < keyPartLen; ++i)
             sprintf(hexBuffer + (i << 1), "%02X", data[i]);
@@ -56,7 +50,7 @@ template<size_t BYTES> struct tarr_type {
             else if (ch >= 17 && ch <= 22) ch -= 7;	// 'A' - '0'
             else if (ch < 0 || ch > 16) return false;
             data[i] = (unsigned char)(ch << 4);
-            ch = hexBuffer[SUCC(j)] - '0';
+            ch = hexBuffer[j + 1] - '0';
             if (ch >= 49 && ch <= 55) ch -= 39;	// 'a' - '0'
             else if (ch >= 17 && ch <= 22) ch -= 7;	// 'A' - '0'
             else if (ch < 0 || ch > 16) return false;

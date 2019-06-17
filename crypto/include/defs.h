@@ -41,7 +41,7 @@
 # define CLOSESOCKET(s)  close(s)
 # endif
 #endif
-
+/*
 #ifdef _WIN32
 
 #define NET_ERR(_op) {\
@@ -57,33 +57,7 @@
 }
 
 #endif
-
-#define LOG_LEVEL                   RA_LOG::raLogMode::ralmDebug
-
-//#define MAX_RECORDS_IN_MEMORY       0x4000
-
-//#define MAX_DEQUE                   0x100
-//#define MAX_CMD_DEQUE               0x100
-
-#define MAX_PACKAGE_SZ              0x800000
-// TODO: изменить
-extern unsigned short UDP_PORT;
-extern const char *NET_ADDR;
-extern const char *CURRENT_DB;
-extern unsigned long DEF_ADDR;
-extern unsigned short FULLSTOP_FLG; //глобальный флаг останова по CTRL+C\CTRL+Break
-extern unsigned short SetMainOnRun_FLG;
-
-#define API_SEND_BLOCKS_LIMIT 20
-#define API_SEND_TRANSACTIONS_LIMIT 50
-
-#define FEE_RATIO 1000
-#define FRACTION_RANK 1000000000
-#define MINIMAL_COMISSION Amount(0u, 100u)
-
-#define BLOCKS_TIMER_MS             200
-
-#define DEFAULT_DB                  "cashdb"
+*/
 
 #define MINIMAL_STATUS_LENGTH       0x200
 

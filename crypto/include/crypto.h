@@ -10,8 +10,7 @@
 #include <macro.h>
 #include <defs.h>
 #include <export_decl.h>
-#include <ra_types.h>
-#include <ra_log.h>
+#include <types.h>
 
 #include <blake2.h>
 #include <ed25519.h>

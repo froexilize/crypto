@@ -1,18 +1,7 @@
 #ifndef _MACRO_H_
 #define _MACRO_H_
 
-#ifdef _WIN32
-#define HOMEDIR	(getenv("HOMEPATH"))
-#else
-#define HOMEDIR	(getenv("HOME"))
-#endif
-
-#define PRED(x)			((x) - 1)
-#define SUCC(x)			((x) + 1)
 #define COUNT(arr)		((sizeof(arr) / sizeof(*arr)))
-#define ZEROIZE(p)      (memset((p), 0, sizeof(*(p))))
-#define ZEROARR(arr)      (memset((arr), 0, sizeof(arr)))
-#define FIELD_OFFS(t, f)    ((size_t)&((t *)nullptr)->f)
 
 #define SPRINTF         if(!b_silent)sprintf
 #define SILENCE         bool b_silent = (!Status) || (StatusSz < MINIMAL_STATUS_LENGTH);
