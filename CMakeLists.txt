@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
+include(InstallRequiredSystemLibraries)
 
 #configure_file(CMakeLists.txt.in blake2-download/CMakeLists.txt)
 #execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
@@ -59,6 +60,7 @@ add_library(crypto SHARED ${RALIB_FILES}
 		crypto/include/macro.h
 		)
 
+
 add_library(crypto_static ${RALIB_FILES})
 
 assign_source_group(${RALIB_FILES})
@@ -80,3 +82,12 @@ target_link_libraries(crypto)
 add_dependencies(crypto blake2_ext)
 add_dependencies(crypto_static blake2_ext)
 
+install(TARGETS crypto_static DESTINATION lib)
+install(FILES
+		crypto/include/crypto.h
+		#crypto/include/defs.h
+		#crypto/include/export_decl.h
+		#crypto/include/macro.h
+		#crypto/include/types.h
+		DESTINATION include)
+install(FILES ${BLAKE2_INCLUDE_DIR}/blake2.h DESTINATION include)
