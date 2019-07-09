@@ -36,6 +36,7 @@ endif()
 
 include("cmake/External_blake2.cmake")
 include_directories("${BLAKE2_INCLUDE_DIR}")
+set_source_files_properties("${BLAKE2_INCLUDE_DIR}/blake2.h" PROPERTIES GENERATED TRUE)
 
 file(GLOB ED_SRCS "ed25519/src/*.c*")
 file(GLOB CSC_SRCS "crypto/src/*.cpp")
@@ -74,7 +75,7 @@ add_library(crypto_static STATIC
 set_target_properties(crypto PROPERTIES PUBLIC_HEADER "${RALIB_HEADERS}")
 set_target_properties(crypto_static PROPERTIES PUBLIC_HEADER "${RALIB_HEADERS}")
 
-assign_source_group(${RALIB_FILES})
+assign_source_group(${RALIB_FILES} ${RALIB_HEADERS})
 
 target_include_directories(crypto_static SYSTEM PRIVATE rc4)
 target_include_directories(crypto_static SYSTEM PRIVATE ed25519/src)
@@ -99,9 +100,14 @@ set_target_properties(crypto_static PROPERTIES
 	LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/dist/bin
 )
 
-install(TARGETS crypto_static
+install(TARGETS crypto crypto_static
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib
 	RUNTIME DESTINATION bin
-	PUBLIC_HEADER DESTINATION include
+	PUBLIC_HEADER DESTINATION include/crypto
 )
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Boris Dergachov")
+include(CPack)
+

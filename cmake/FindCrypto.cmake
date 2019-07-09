@@ -1,7 +1,12 @@
 find_path(
 		CRYPTO_INCLUDE_DIR
-		NAMES crypto.h
-		PATHS /usr/local/include /usr/include ${CRYPTO_DIR}/include
+		NAMES crypto/crypto.h
+		PATHS
+			/usr/local/include
+			/usr/include
+			${CRYPTO_DIR}/include
+			${CRYPTO_DIR}/usr/include
+			${CRYPTO_DIR}/usr/local/include
 )
 
 message(STATUS "CRYPTO_DIR=${CRYPTO_DIR}")
@@ -13,6 +18,8 @@ if(CRYPTO_INCLUDE_DIR)
 				/usr/local/lib
 				/usr/lib
 				${CRYPTO_DIR}/lib
+				${CRYPTO_DIR}/usr/lib
+				${CRYPTO_DIR}/usr/local/lib
 	)
 	if(CRYPTO_LIBRARY)
 		set(CRYPTO_LIBRARY_DIR "")
