@@ -53,6 +53,7 @@ set(RALIB_FILES
 	)
 set(RALIB_HEADERS
 	${BLAKE2_INCLUDE_DIR}/blake2.h
+	ed25519/src/ed25519.h
 	crypto/include/crypto.h
 	crypto/include/defs.h
 	crypto/include/export_decl.h
