@@ -34,7 +34,7 @@ if(MSVC)
 	add_definitions(/arch:AVX)
 endif()
 
-include("External_blake2.cmake")
+include("cmake/External_blake2.cmake")
 include_directories("${BLAKE2_INCLUDE_DIR}")
 
 file(GLOB ED_SRCS "ed25519/src/*.c*")
@@ -51,43 +51,56 @@ set(RALIB_FILES
 	rc4/rc4.h
 	crypto/src/crypto.cpp
 	)
-
+set(RALIB_HEADERS
+	${BLAKE2_INCLUDE_DIR}/blake2.h
+	crypto/include/crypto.h
+	crypto/include/defs.h
+	crypto/include/export_decl.h
+	crypto/include/macro.h
+	crypto/include/types.h
+)
 # Build both shared and static lib
-add_library(crypto SHARED ${RALIB_FILES}
-		crypto/include/defs.h
-		crypto/include/export_decl.h
-		crypto/include/types.h
-		crypto/include/macro.h
-		)
+add_library(crypto SHARED
+	${RALIB_FILES}
+	${RALIB_HEADERS}
+)
 
+add_library(crypto_static STATIC
+	${RALIB_FILES}
+	${RALIB_HEADERS}
+)
 
-add_library(crypto_static ${RALIB_FILES})
+set_target_properties(crypto PROPERTIES PUBLIC_HEADER "${RALIB_HEADERS}")
+set_target_properties(crypto_static PROPERTIES PUBLIC_HEADER "${RALIB_HEADERS}")
 
 assign_source_group(${RALIB_FILES})
 
-target_include_directories(crypto_static SYSTEM PUBLIC rc4)
-target_include_directories(crypto_static SYSTEM PUBLIC ed25519/src)
-target_include_directories(crypto_static SYSTEM PUBLIC crypto/include)
-target_include_directories(crypto_static SYSTEM PUBLIC ./)
+target_include_directories(crypto_static SYSTEM PRIVATE rc4)
+target_include_directories(crypto_static SYSTEM PRIVATE ed25519/src)
+target_include_directories(crypto_static SYSTEM PRIVATE crypto/include)
+target_include_directories(crypto_static SYSTEM PRIVATE ./)
 target_link_libraries(crypto_static)
 
 set_target_properties(crypto_static PROPERTIES OUTPUT_NAME ra_lib)
 
-target_include_directories(crypto SYSTEM PUBLIC rc4)
-target_include_directories(crypto SYSTEM PUBLIC ed25519/src)
-target_include_directories(crypto SYSTEM PUBLIC crypto/include)
-target_include_directories(crypto SYSTEM PUBLIC ./)
+target_include_directories(crypto SYSTEM PRIVATE rc4)
+target_include_directories(crypto SYSTEM PRIVATE ed25519/src)
+target_include_directories(crypto SYSTEM PRIVATE crypto/include)
+target_include_directories(crypto SYSTEM PRIVATE ./)
 target_link_libraries(crypto)
 
 add_dependencies(crypto blake2_ext)
 add_dependencies(crypto_static blake2_ext)
 
-install(TARGETS crypto_static DESTINATION lib)
-install(FILES
-		crypto/include/crypto.h
-		#crypto/include/defs.h
-		#crypto/include/export_decl.h
-		#crypto/include/macro.h
-		#crypto/include/types.h
-		DESTINATION include)
-install(FILES ${BLAKE2_INCLUDE_DIR}/blake2.h DESTINATION include)
+set_target_properties(crypto_static PROPERTIES
+	ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/dist/lib
+	RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/dist/bin
+	LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/dist/bin
+)
+
+install(TARGETS crypto_static
+	LIBRARY DESTINATION lib
+	ARCHIVE DESTINATION lib
+	RUNTIME DESTINATION bin
+	PUBLIC_HEADER DESTINATION include
+)
