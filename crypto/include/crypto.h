@@ -7,13 +7,13 @@
 #include <chrono>
 #include <math.h>
 
-#include <macro.h>
-#include <defs.h>
-#include <export_decl.h>
-#include <types.h>
+#include "macro.h"
+#include "defs.h"
+#include "export_decl.h"
+#include "types.h"
 
-#include <blake2.h>
-#include <ed25519.h>
+#include "blake2.h"
+#include "ed25519.h"
 
 typedef struct hash_type : tarr_type<BLAKE2B_OUTBYTES> {
     hash_type() = default;

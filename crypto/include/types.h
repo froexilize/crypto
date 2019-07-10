@@ -4,7 +4,7 @@
 #include <string.h>
 #include <string>
 #include <stdlib.h>
-#include <macro.h>
+#include "macro.h"
 
 #ifdef _WIN32
 // For unknown reasons this type defined in MSVC with another way;

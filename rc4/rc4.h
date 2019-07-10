@@ -2,9 +2,9 @@
 #define RA_CRYPT_RC4_H
 
 #include <stdlib.h>
-#include <macro.h>
-#include <defs.h>
-#include <export_decl.h>
+#include "macro.h"
+#include "defs.h"
+#include "export_decl.h"
 
 #ifdef __cplusplus
 extern "C" {

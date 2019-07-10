@@ -1,5 +1,4 @@
-#ifndef _MACRO_H_
-#define _MACRO_H_
+#pragma once
 
 #define COUNT(arr)		((sizeof(arr) / sizeof(*arr)))
 
@@ -44,4 +43,3 @@
 
 #define LUA_NEW(t)      ((t *)lua_newuserdata(state, sizeof(t)))
 
-#endif

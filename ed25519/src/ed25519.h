@@ -6,9 +6,9 @@
 #include <exception>
 #include <stdexcept>
 
-#include <defs.h>
-#include <export_decl.h>
-#include <types.h>
+#include "defs.h"
+#include "export_decl.h"
+#include "types.h"
 
 #if defined(_WIN32)
     #if defined(ED25519_BUILD_DLL)
