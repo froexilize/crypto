@@ -2,21 +2,17 @@ find_path(
 		CRYPTO_INCLUDE_DIR
 		NAMES crypto/crypto.h
 		PATHS
-			/usr/local/include
-			/usr/include
+			$ENV{CRYPTO_DIR}/include
 			${CRYPTO_DIR}/include
 			${CRYPTO_DIR}/usr/include
 			${CRYPTO_DIR}/usr/local/include
 )
 
-message(STATUS "CRYPTO_DIR=${CRYPTO_DIR}")
-
 if(CRYPTO_INCLUDE_DIR)
 	find_library(CRYPTO_LIBRARY
 			NAMES ra_lib
 			PATHS
-				/usr/local/lib
-				/usr/lib
+				$ENV{CRYPTO_DIR}/lib
 				${CRYPTO_DIR}/lib
 				${CRYPTO_DIR}/usr/lib
 				${CRYPTO_DIR}/usr/local/lib
