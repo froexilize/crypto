@@ -62,6 +62,7 @@ set(RALIB_HEADERS
 	crypto/include/export_decl.h
 	crypto/include/macro.h
 	crypto/include/types.h
+	crypto/include/curve25519.h
 )
 # Build both shared and static lib
 add_library(crypto SHARED
