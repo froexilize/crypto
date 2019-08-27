@@ -39,7 +39,7 @@ include_directories("${BLAKE2_INCLUDE_DIR}")
 set_source_files_properties("${BLAKE2_INCLUDE_DIR}/blake2.h" PROPERTIES GENERATED TRUE)
 
 file(GLOB ED_SRCS "ed25519/src/*.c*")
-file(GLOB CSC_SRCS "crypto/src/*.cpp")
+file(GLOB CSC_SRCS "src/*.cpp")
 file(GLOB CURV_SRCS "contrib/curve25519-donna/curve25519-donna-c64.c")
 
 set(RALIB_FILES
@@ -50,19 +50,19 @@ set(RALIB_FILES
 	curve25519.cpp
 	rc4/rc4.c
 	rc4/rc4.h
-	crypto/src/crypto.cpp
+	src/crypto.cpp
 	)
 set(RALIB_HEADERS
 	${BLAKE2_INCLUDE_DIR}/blake2.h
 	ed25519/src/ed25519.h
 	curve25519.h
 	rc4/rc4.h
-	crypto/include/crypto.h
-	crypto/include/defs.h
-	crypto/include/export_decl.h
-	crypto/include/macro.h
-	crypto/include/types.h
-	crypto/include/curve25519.h
+	include/crypto/crypto.h
+	include/crypto/defs.h
+	include/crypto/export_decl.h
+	include/crypto/macro.h
+	include/crypto/types.h
+	include/crypto/curve25519.h
 )
 # Build both shared and static lib
 add_library(crypto SHARED
@@ -82,7 +82,7 @@ assign_source_group(${RALIB_FILES} ${RALIB_HEADERS})
 
 target_include_directories(crypto_static SYSTEM PRIVATE rc4)
 target_include_directories(crypto_static SYSTEM PRIVATE ed25519/src)
-target_include_directories(crypto_static SYSTEM PRIVATE crypto/include)
+target_include_directories(crypto_static SYSTEM PRIVATE include/crypto)
 target_include_directories(crypto_static SYSTEM PRIVATE ./)
 target_link_libraries(crypto_static)
 
@@ -90,7 +90,7 @@ set_target_properties(crypto_static PROPERTIES OUTPUT_NAME ra_lib)
 
 target_include_directories(crypto SYSTEM PRIVATE rc4)
 target_include_directories(crypto SYSTEM PRIVATE ed25519/src)
-target_include_directories(crypto SYSTEM PRIVATE crypto/include)
+target_include_directories(crypto SYSTEM PRIVATE include/crypto)
 target_include_directories(crypto SYSTEM PRIVATE ./)
 target_link_libraries(crypto)
 
